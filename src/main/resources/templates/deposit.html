@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+    <div th:insert="basefrag :: headerFrag"></div>
+    <title>Xfer</title>
+</head>
+<body>
+<div th:insert="basefrag :: navFrag"></div>
+<h1>Transaction</h1>
+<p th:inline="text">
+    Accounts Number:[[${xfer.acctno}]]</br>
+    Balance: $[[${xfer.balance}]]
+</p>
+
+<form action="#" th:action="@{/processXfer/{id}(id=${id})}" th:object="${xfer}" method="post">
+    <input type="hidden" th:field="*{acctno}" >
+    <input type="hidden" th:field="*{balance}" >
+    Amount:<input type="text" th:field="*{amount}"/>
+    <br/>
+    Transaction Type:
+    <input type="radio" th:field="*{deposit}" value=true> Deposit
+    <input type="radio" th:field="*{deposit}" value=false> Withdraw<br>
+    <br>
+    <input type="submit" value="Submit" />
+
+</form>
+
+
+<div th:insert="baseFrag :: footerFrag"></div>
+<div th:insert="baseFrag :: scriptFrag"></div>
+</body>
+</html>

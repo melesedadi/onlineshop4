@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+    <div th:insert="basefrag :: headerFrag"></div>
+    <title>NewCustomer</title>
+</head>
+<body>
+<div th:insert="basefrag :: navFrag"></div>
+<h1>New Customer</h1>
+<form action = "#" th:action="@{/processNewCust}" th:object="${customer}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    First Name: <input type="text" th:field="*{first}" />
+    <span th:if="${#fields.hasErrors('first')}"
+          th:errors="*{first}"></span>
+    <br/><br/>
+    Last Name: <input type="text" th:field="*{last}" />
+    <span th:if="${#fields.hasErrors('last')}"
+          th:errors="*{last}"></span>
+    <br/><br/>
+    Address: <input type="text" th:field="*{address}" />
+    <span th:if="${#fields.hasErrors('address')}"
+          th:errors="*{address}"></span>
+    <br/><br/>
+    City: <input type="text" th:field="*{city}" />
+    <span th:if="${#fields.hasErrors('city')}"
+          th:errors="*{city}"></span>
+    <br/><br/>
+    State: <input type="text" th:field="*{state}" />
+    <span th:if="${#fields.hasErrors('state')}"
+          th:errors="*{state}"></span>
+    <br/><br/>
+    Zipcode: <input type="text" th:field="*{zipcode}" />
+    <span th:if="${#fields.hasErrors('zipcode')}"
+          th:errors="*{zipcode}"></span>
+    <br/><br/>
+    <br/>
+    <input type="submit" value="Submit" />
+</form>
+<div th:insert="baseFrag :: footerFrag"></div>
+<div th:insert="baseFrag :: scriptFrag"></div>
+</body>
+</html>

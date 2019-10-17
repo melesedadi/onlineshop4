@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+    <div th:insert="basefrag :: headerFrag"></div>
+    <title>NewAccount</title>
+</head>
+<body>
+<div th:insert="basefrag :: navFrag"></div>
+<h1>Customer's Accounts</h1>
+
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Account</th>
+        <th scope="col">Type</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account : ${customer.accounts}">
+        <td th:text="${account.acctno}"></td>
+        <td th:text="${account.checking} ? 'Checking' : 'Saving'"></td>
+        <td>
+            <a th:href="@{/xfer/{id}(id=${account.id})}">Transaction</a>
+            <a th:href="@{/statement/{id}(id=${account.id})}">Statement</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div th:insert="baseFrag :: footerFrag"></div>
+<div th:insert="baseFrag :: scriptFrag"></div>
+</body>
+</html>

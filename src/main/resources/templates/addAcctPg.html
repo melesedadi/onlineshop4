@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+    <div th:insert="basefrag :: headerFrag"></div>
+    <title>NewAccount</title>
+</head>
+<body>
+<div th:insert="basefrag :: navFrag"></div>
+<h1>New Account</h1>
+<h2>Customer: </h2>
+<form action="#" th:action="@{/processAcct/{id}(id=${id})}" th:object="${account}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    Account Number:<input type="text" th:field="*{acctno}"/>
+    <span th:if="${#fields.hasErrors('acctno')}"
+          th:errors="*{acctno}"></span>
+    <br/>
+    <br/>
+    Password:<input type="text" th:field="*{passwd}"/>
+    <span th:if="${#fields.hasErrors('passwd')}"
+          th:errors="*{passwd}"></span>
+    <br/>
+    Account Type:
+    <input type="radio" th:field="*{checking}" value=true> Checking
+    <input type="radio" th:field="*{checking}" value=false> Saving<br>
+    <br>
+    <input type="submit" value="Submit" />
+
+
+</form>
+
+<div th:insert="baseFrag :: footerFrag"></div>
+<div th:insert="baseFrag :: scriptFrag"></div>
+</body>
+</html>

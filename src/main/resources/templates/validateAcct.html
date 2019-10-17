@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+    <div th:insert="basefrag :: headerFrag"></div>
+    <title>NewAccount</title>
+</head>
+<body>
+<div th:insert="basefrag :: navFrag"></div>
+<h1>Validate Account</h1>
+
+<h2>Account:
+    <p th:text="${account.acctno}"></p>
+</h2>
+<form action="#" th:action="@{/validateAcct/{id}(id=${id})}" th:object="${testacct}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{acctno}" value="${account.acctno}"/>
+    Password:<input type="text" th:field="*{passwd}"/>
+    <span th:if="${#fields.hasErrors('passwd')}"
+          th:errors="*{passwd}"></span>
+
+<!--    <span th:if="${failedpasswd == 'T'}">Wrong Password!</span>-->
+
+    <input type="submit" value="Submit"/>
+    <br/>
+
+
+<div th:insert="baseFrag :: footerFrag"></div>
+<div th:insert="baseFrag :: scriptFrag"></div>
+</body>
+</html>
