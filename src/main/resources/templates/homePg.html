@@ -28,11 +28,11 @@
         <td th:text="${cust.state}"></td>
         <td th:text="${cust.zipcode}"></td>
         <td>
-            <a th:href="@{/update/{id}(id=${cust.id})}">Update</a>
-            <a th:href="@{/detail/{id}(id=${cust.id})}">Detail</a>
-            <a th:href="@{/delete/{id}(id=${cust.id})}">Delete</a>
+            <a th:href="@{/updatecust/{id}(id=${cust.id})}">Update</a>
+            <a th:href="@{/detailcust/{id}(id=${cust.id})}">Detail</a>
+            <a th:href="@{/deletecust/{id}(id=${cust.id})}">Delete</a>
             <a th:href="@{/addacct/{id}(id=${cust.id})}">Add Account</a>
-<!--            <a th:href="#@{/transaction/{id}(id=${cust.id})}">Xfer</a>-->
+
         </td>
     </tr>
     </tbody>

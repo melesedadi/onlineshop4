@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:insert="basefrag :: headerFrag"></div>
+    <title>DetailCustomer</title>
+</head>
+<body>
+<div th:insert="basefrag :: navFrag"></div>
+
+<h1>Customer Information</h1>
+    [[${customer.last}]], [[${customer.first}]]<br/><br/>
+
+    [[${customer.address}]]<br/>
+    [[${customer.city}]], [[${customer.state}]] [[${customer.zipcode}]]<br/>
+
+    Accounts<br/>
+    <br/><br/>
+    <button type="button"><a th:href="@{/addacct/{id}(id=${customer.id})}"/>Add Account</button>
+
+
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Account</th>
+        <th scope="col">Type</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account : ${customer.accounts}">
+        <td th:text="${account.acctno}"></td>
+        <td th:text="${account.checking} ? 'Checking' : 'Saving'"></td>
+        <td>
+            <a th:href="@{/xfer/{id}/{option}(id=${account.id}, option=1)}">Transaction</a>
+            <a th:href="@{/statement/{id}(id=${account.id})}">Statement</a>
+            <a th:href="@{/xfer/{id}/{option}(id=${account.id}, option=2)}">Delete</a>
+<!--            <a th:href="@{/deleteAcct/{id}(id=${account.id})}">Delete</a>-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<div th:insert="basefrag :: scriptFrag"></div>
+<div th:insert="basefrag :: footerFrag"></div>
+</body>
+</html>

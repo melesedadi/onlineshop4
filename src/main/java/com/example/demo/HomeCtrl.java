@@ -88,8 +88,23 @@ public class HomeCtrl {
         return "detailAcctPg";
     }
 
+
+    /*
+    * @RequestMapping(value = "/{orderId}/items/{itemId}", method=RequestMethod.GET)
+  @ResponseBody
+  public String getItem(@PathVariable final String orderId, @PathVariable final String itemId) {
+    return "Order ID: " + orderId + ", Item ID: " + itemId;
+  }
+
     @GetMapping("/xfer/{id}")
     public String depoistAccount(@PathVariable("id") long id, Model model) {
+
+     */
+
+    @GetMapping("/xfer/{id}/{option}")
+    public String depoistAccount(@PathVariable("id") long id,
+                                 @PathVariable("option") long option,
+                                 Model model) {
         // id is account id
         Account account = accountRepository.findById(id);
         Account testacct = new Account();
@@ -106,27 +121,40 @@ public class HomeCtrl {
         return "validateAcct";
     }
 
-    @PostMapping("/validateAcct/{id}")  // id is account's id
+    @PostMapping("/validateAcct/{id}/{option}")  // id is account's id
     public String validateAccount(@PathVariable("id") long id,
+                                  @PathVariable("option") long option,
                                   @Valid Account testacct, Model model,
                                   BindingResult result) {
         if (result.hasErrors()) {
             return "validateAcct";
         }
 
+        String retstr;
         // check for password match
         Account realacct = accountRepository.findById(id);
         if (realacct.getPasswd().equalsIgnoreCase(testacct.getPasswd())) {
             // password matched
-            model.addAttribute("account", realacct);
 
-            Xfer xfer = new Xfer();
-            xfer.setAcctno(realacct.getAcctno());
-            xfer.setBalance(realacct.getBalance());
-            model.addAttribute("xfer", xfer);
-            return "deposit";
+            if (option == 2) {//  check for delete account
+                retstr = "redirect:/deleteAcct/" + id;
+
+            }
+            else {
+                model.addAttribute("account", realacct);
+
+                Xfer xfer = new Xfer();
+                xfer.setAcctno(realacct.getAcctno());
+                xfer.setBalance(realacct.getBalance());
+                model.addAttribute("xfer", xfer);
+                //return "deposit";
+                retstr = "deposit";
+            }
         } else
-            return "redirect:/";
+            //return "redirect:/";
+            retstr = "redirect:/";
+
+        return retstr;
 
     }
 
@@ -169,4 +197,49 @@ public class HomeCtrl {
         model.addAttribute("xfers", xfers);
         return "listStmt";
     }
+
+    @GetMapping("/updatecust/{id}")
+    public String updateCustomer(@PathVariable("id") long id, Model model) {
+        // id is customer id
+        model.addAttribute("customer", customerRepository.findById(id));
+        return "updateCustPg";
+    }
+
+
+    @GetMapping("/detailcust/{id}")
+    public String detailCustomer(@PathVariable("id") long id, Model model) {
+        // id is customer id
+        model.addAttribute("customer", customerRepository.findById(id));
+        return "detailCustPg";
+    }
+
+    @GetMapping("/deletecust/{id}")
+    public String delCustomer(@PathVariable("id") long id, Model model) {
+        // id is customer id
+        String result;
+        Customer customer = customerRepository.findById(id);
+        if (customer.accounts.size() == 0) {
+            customerRepository.delete(customer);
+            result = "redirect:/";
+        }
+        else {
+            result = "redirect:/detail/" + id;
+        }
+
+        return result;
+    }
+
+    @GetMapping("/deleteAcct/{id}")
+    public String delAccount(@PathVariable("id") long id, Model model) {
+        // id is account id
+        Account acct = accountRepository.findById(id);
+
+        Customer customer = acct.getOwner();
+        customer.accounts.remove(acct);
+
+        accountRepository.delete(acct);
+        return "redirect:/";
+
+    }
+
 }
