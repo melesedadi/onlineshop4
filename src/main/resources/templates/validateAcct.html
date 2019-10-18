@@ -4,7 +4,7 @@
     <div th:insert="basefrag :: headerFrag"></div>
     <title>ValidateAccount</title>
 </head>
-<body>
+<body style="text-align: center">
 <div th:insert="basefrag :: navFrag"></div>
 <h1>Validate Account</h1>
 
@@ -17,9 +17,6 @@
     Password:<input type="text" th:field="*{passwd}"/>
     <span th:if="${#fields.hasErrors('passwd')}"
           th:errors="*{passwd}"></span>
-
-<!--    <span th:if="${failedpasswd == 'T'}">Wrong Password!</span>-->
-
     <input type="submit" value="Submit"/>
     <br/>
 

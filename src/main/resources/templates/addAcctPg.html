@@ -4,10 +4,10 @@
     <div th:insert="basefrag :: headerFrag"></div>
     <title>NewAccount</title>
 </head>
-<body>
+<body style="text-align: center">
 <div th:insert="basefrag :: navFrag"></div>
 <h1>New Account</h1>
-<h2>Customer: </h2>
+<h2>Customer: [[${customer.last}]], [[${customer.first}]]</h2><br/>
 <form action="#" th:action="@{/processAcct/{id}(id=${id})}" th:object="${account}" method="post">
     <input type="hidden" th:field="*{id}"/>
     Account Number:<input type="text" th:field="*{acctno}"/>

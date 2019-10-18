@@ -136,9 +136,11 @@ public class HomeCtrl {
         if (realacct.getPasswd().equalsIgnoreCase(testacct.getPasswd())) {
             // password matched
 
-            if (option == 2) {//  check for delete account
+            if (option == 2) {
+                retstr = "redirect:/statement/" + id;
+            }
+            else if (option == 3) {//  check for delete account
                 retstr = "redirect:/deleteAcct/" + id;
-
             }
             else {
                 model.addAttribute("account", realacct);
@@ -147,11 +149,9 @@ public class HomeCtrl {
                 xfer.setAcctno(realacct.getAcctno());
                 xfer.setBalance(realacct.getBalance());
                 model.addAttribute("xfer", xfer);
-                //return "deposit";
                 retstr = "deposit";
             }
         } else
-            //return "redirect:/";
             retstr = "redirect:/";
 
         return retstr;

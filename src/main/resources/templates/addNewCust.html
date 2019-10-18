@@ -4,10 +4,10 @@
     <div th:insert="basefrag :: headerFrag"></div>
     <title>NewCustomer</title>
 </head>
-<body>
+<body style="text-align: center">
 <div th:insert="basefrag :: navFrag"></div>
 <h1>New Customer</h1>
-<form action = "#" th:action="@{/processNewCust}" th:object="${customer}" method="post">
+<form class="newcustomer" action = "#" th:action="@{/processNewCust}" th:object="${customer}" method="post">
     <input type="hidden" th:field="*{id}" />
     First Name: <input type="text" th:field="*{first}" />
     <span th:if="${#fields.hasErrors('first')}"
