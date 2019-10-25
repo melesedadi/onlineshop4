@@ -8,10 +8,10 @@
 <div th:insert="basefrag :: navFrag"></div>
 
 <h1>Customer Information</h1>
-    [[${customer.last}]], [[${customer.first}]]<br/><br/>
+    [[${customer.lastname}]], [[${customer.firstname}]]<br/><br/>
 
-    [[${customer.address}]]<br/>
-    [[${customer.city}]], [[${customer.state}]] [[${customer.zipcode}]]<br/>
+<!--    [[${customer.address}]]<br/>-->
+<!--    [[${customer.city}]], [[${customer.state}]] [[${customer.zipcode}]]<br/>-->
 
     <br/><br/>
     <button type="button"><a th:href="@{/addacct/{id}(id=${customer.id})}"/>Add Account</button>

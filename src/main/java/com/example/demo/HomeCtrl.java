@@ -86,6 +86,78 @@ public class HomeCtrl {
 //        return "homePg";
 //    }
 
+
+    @RequestMapping("/customerlist")
+    public String departmentList(Model model) {
+        model.addAttribute("users", customerRepository.findAll());
+        return "customerlist";
+
+    }
+
+    @PostMapping("/processcustomer")
+    public String processForm1(@Valid Customer customer,
+                               BindingResult result) {
+        if (result.hasErrors()) {
+            return "registerform";
+        }
+        customerRepository.save(customer);
+        return "redirect:/userslist";
+//    }
+//    @RequestMapping("/balancelist")
+//    public String employeeList(Model model){
+//        model.addAttribute("accounts", accountRepository.findAll());
+//        return "balancelist";
+//    }
+//
+//    @GetMapping("/addbalance")
+//    public String employeeForm(Model model){
+//        model.addAttribute("account", new Account());
+//        model.addAttribute("user", userRepository.findAll());
+//        return "balanceform";
+//    }
+//    @PostMapping("/processbalance")
+//    public String processForm2(@Valid Account account,
+//                               BindingResult result){
+//        if (result.hasErrors()){
+//            return "balanceform";
+//        }
+//        accountRepository.save(account);
+//        return "redirect:/balancelist";
+//    }
+//    @RequestMapping("/detailbalance/{id}")
+//    public String showPerson(@PathVariable("id") int id, Model model)
+//    {model.addAttribute("account", accountRepository.findAll());
+//        return "showbalance";
+//    }
+//    @RequestMapping("/updatebalance/{id}")
+//    public String updatePerson(@PathVariable("id") int id,Model model){
+//        model.addAttribute("account", accountRepository.findById(id).get());
+//        return "balanceform";
+//    }
+//    @RequestMapping("/deletebalance/{id}")
+//    public String delPerson(@PathVariable("id") int id){
+//        accountRepository.deleteById(id);
+//        return "redirect:/";
+//    }
+//    @RequestMapping("/detailuser/{id}")
+//    public String showPet(@PathVariable("id") int id, Model model)
+//    {model.addAttribute("user", userRepository.findById(id).get());
+//        return "showusers";
+//    }
+//    @RequestMapping("/updateuser/{id}")
+//    public String updatePet(@PathVariable("id") int id,Model model){
+//        model.addAttribute("account", accountRepository.findById(id).get());
+//        model.addAttribute("users", userRepository.findAll());
+//        return "registerform";
+//    }
+//    @RequestMapping("/deleteuser/{id}")
+//    public String delPet(@PathVariable("id") int id){
+//        userRepository.deleteById(id);
+//        return "redirect:/";
+//    }
+
+        /////
+    }
     @GetMapping("/newcustomer")
     public String newcustomer(Model model) {
         Customer customer = new Customer();

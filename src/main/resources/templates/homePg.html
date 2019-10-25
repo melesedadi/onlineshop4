@@ -22,11 +22,11 @@
     </thead>
     <tbody>
     <tr th:each="customer : ${customer}">
-        <td th:text="${cust.last}"></td>
-        <td th:text="${cust.first}"></td>
-        <td th:text="${cust.city}"></td>
-        <td th:text="${cust.state}"></td>
-        <td th:text="${cust.zipcode}"></td>
+        <td th:text="${cust.lastname}"></td>
+        <td th:text="${cust.firstname}"></td>
+<!--        <td th:text="${cust.city}"></td>-->
+<!--        <td th:text="${cust.state}"></td>-->
+<!--        <td th:text="${cust.zipcode}"></td>-->
         <td>
             <a th:href="@{/updatecust/{id}(id=${cust.id})}">Update</a>
             <a th:href="@{/detailcust/{id}(id=${cust.id})}">Detail</a>
