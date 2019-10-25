@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
@@ -24,29 +21,88 @@ public class HomeCtrl {
 
     @Autowired
     XferRepository xferRepository;
+    @Autowired
+    private LoginService loginService;
+
+    @RequestMapping("/home")
+    public String home() {
+        return "home";
+    }
 
     @RequestMapping("/")
     public String index(Model model) {
-        model.addAttribute("customers", customerRepository.findAll());
-        return "homePg";
+        return "loginform";
     }
 
-    @GetMapping("/newcustomer")
-    public String newcustomer(Model model) {
-        Customer customer = new Customer();
-        model.addAttribute("customer", customer);
-        return "addNewCust";
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public String getLoginForm(){
+        return "loginform";
     }
 
-    @PostMapping("/processNewCust")
-    public String processNewCust(@Valid Customer customer, BindingResult result) {
-        if (result.hasErrors()) {
-            return "addNewCust";
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public String doLogin(@ModelAttribute(name = "loginForm") Customer customer, Model model)
+    {
+
+        if(loginService.findUser(customer.getUsername(),customer.getPassword())!= null)
+        {
+            return "home";
+        }
+        else
+        {
+            model.addAttribute("invalidCredentials",true);
+            return "loginform";
+        }
+    }
+
+    @RequestMapping(value = "/register",method = RequestMethod.GET)
+    public String getRegisterForm(Model model)
+    {
+        model.addAttribute("customer",new Customer());
+
+        return "registerform";
+    }
+
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    public String register(@Valid Customer userForm, BindingResult result){
+
+        if(result.hasErrors()){
+            return "registerform";
         }
 
-        customerRepository.save(customer);
-        return "redirect:/";
+        String firstname = userForm.getFirstname();
+        String lastname = userForm.getLastname();
+        String username = userForm.getUsername();
+        String password = userForm.getPassword();
+
+        Customer user = new Customer(firstname,lastname,username,password);
+
+        loginService.registerUser(user);
+        return "loginform";
     }
+
+    /////
+//    @RequestMapping("/")
+//    public String index(Model model) {
+//        model.addAttribute("customers", customerRepository.findAll());
+//        return "homePg";
+//    }
+//
+//    @GetMapping("/newcustomer")
+//    public String newcustomer(Model model) {
+//        Customer customer = new Customer();
+//        model.addAttribute("customer", customer);
+//        return "addNewCust";
+//    }
+//
+//    @PostMapping("/processNewCust")
+//    public String processNewCust(@Valid Customer customer, BindingResult result) {
+//        if (result.hasErrors()) {
+//            return "addNewCust";
+//        }
+//
+//        customerRepository.save(customer);
+//        return "redirect:/";
+//    }
 
     @GetMapping("/addacct/{id}")
     public String addAccount(@PathVariable("id") long id, Model model) {

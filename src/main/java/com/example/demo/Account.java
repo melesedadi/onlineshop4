@@ -13,11 +13,11 @@ public class Account {
     private long id;
 
     @NotNull
-    @Size(min=9, max=9)
+    @Size(min=1, max=9)
     private String acctno;
 
     @NotNull
-    @Size(min=9, max=9)
+    @Size(min=1, max=9)
     private String passwd;
 
     @NotNull

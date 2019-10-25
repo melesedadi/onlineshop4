@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -12,34 +13,40 @@ public class Customer {
     private long id;
 
     @NotNull
-    @Size(min=1, max=35)
-    private String first;
+    @Size(min = 1, max = 35)
+    private String firstname;
 
     @NotNull
-    @Size(min=1, max=35)
-    private String last;
+    @Size(min = 1, max = 35)
+    private String lastname;
 
-    @NotNull
-    @Size(min=1, max=35)
-    private String address;
-
-    @NotNull
-    @Size(min=1, max=20)
-    private String city;
-
-    @NotNull
-    @Size(min=1, max=2)
-    private String state;
-
-    @NotNull
-    @Size(min=5, max=5)
-    private String zipcode;
-
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //    @NotNull
+//    @Size(min=1, max=35)
+//    private String address;
+//
+//    @NotNull
+//    @Size(min=1, max=20)
+//    private String city;
+//
+//    @NotNull
+//    @Size(min=1, max=2)
+//    private String state;
+//
+//    @NotNull
+//    @Size(min=5, max=5)
+//    private String zipcode;
+//    @NotBlank
+    private String username;
+    @NotBlank
+    private String password;
+    @OneToMany(mappedBy="customer", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     public Set<Account> accounts;
 
+    public Customer(String firstname, String lastname, String username, String password) {
+    }
+
     public Customer() {
-        this.accounts = null;
+
     }
 
     public long getId() {
@@ -50,52 +57,36 @@ public class Customer {
         this.id = id;
     }
 
-    public String getFirst() {
-        return first;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirst(String first) {
-        this.first = first;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLast() {
-        return last;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLast(String last) {
-        this.last = last;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public String getAddress() {
-        return address;
+    public String getUsername() {
+        return username;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getCity() {
-        return city;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Set<Account> getAccounts() {
