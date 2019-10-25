@@ -26,8 +26,8 @@ public class Account {
     private double balance;
 
     @ManyToOne()
-    @JoinColumn(name="owner_id")
-    private Customer owner;
+    @JoinColumn(name="customer_id")
+    private Customer customer;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<Xfer> xfers;
@@ -37,7 +37,7 @@ public class Account {
         this.passwd = "";
         this.checking = true;
         this.balance = 0.0;
-        this.owner = null;
+        this.customer = null;
         this.xfers = null;
     }
 
@@ -81,12 +81,19 @@ public class Account {
         this.balance = balance;
     }
 
-    public Customer getOwner() {
-        return owner;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setOwner(Customer owner) {
-        this.owner = owner;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
+    public Set<Xfer> getXfers() {
+        return xfers;
+    }
+
+    public void setXfers(Set<Xfer> xfers) {
+        this.xfers = xfers;
+    }
 }

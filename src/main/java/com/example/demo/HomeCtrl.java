@@ -24,9 +24,9 @@ public class HomeCtrl {
     @Autowired
     private LoginService loginService;
 
-    @RequestMapping("/home")
+    @RequestMapping("/homePg")
     public String home() {
-        return "home";
+        return "homePg";
     }
 
     @RequestMapping("/")
@@ -45,7 +45,7 @@ public class HomeCtrl {
 
         if(loginService.findUser(customer.getUsername(),customer.getPassword())!= null)
         {
-            return "home";
+            return "homePg";
         }
         else
         {
@@ -74,9 +74,8 @@ public class HomeCtrl {
         String username = userForm.getUsername();
         String password = userForm.getPassword();
 
-        Customer user = new Customer(firstname,lastname,username,password);
 
-        loginService.registerUser(user);
+        loginService.registerUser(userForm);
         return "loginform";
     }
 
@@ -86,23 +85,23 @@ public class HomeCtrl {
 //        model.addAttribute("customers", customerRepository.findAll());
 //        return "homePg";
 //    }
-//
-//    @GetMapping("/newcustomer")
-//    public String newcustomer(Model model) {
-//        Customer customer = new Customer();
-//        model.addAttribute("customer", customer);
-//        return "addNewCust";
-//    }
-//
-//    @PostMapping("/processNewCust")
-//    public String processNewCust(@Valid Customer customer, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return "addNewCust";
-//        }
-//
-//        customerRepository.save(customer);
-//        return "redirect:/";
-//    }
+
+    @GetMapping("/newcustomer")
+    public String newcustomer(Model model) {
+        Customer customer = new Customer();
+        model.addAttribute("customer", customer);
+        return "addNewCust";
+    }
+
+    @PostMapping("/processNewCust")
+    public String processNewCust(@Valid Customer customer, BindingResult result) {
+        if (result.hasErrors()) {
+            return "addNewCust";
+        }
+
+        customerRepository.save(customer);
+        return "redirect:/";
+    }
 
     @GetMapping("/addacct/{id}")
     public String addAccount(@PathVariable("id") long id, Model model) {
@@ -124,7 +123,7 @@ public class HomeCtrl {
         }
 
         Customer customer = customerRepository.findById(id);
-        account.setOwner(customer);
+        account.setCustomer(customer);
 
         Set<Account> allaccounts = customer.getAccounts();
         allaccounts.add(account);
@@ -171,7 +170,7 @@ public class HomeCtrl {
         testacct.setBalance(account.getBalance());
         testacct.setChecking(account.isChecking());
         testacct.setId(account.getId());
-        testacct.setOwner(null);
+        testacct.setCustomer(null);
         model.addAttribute("testacct", testacct);
 
         return "validateAcct";
@@ -290,7 +289,7 @@ public class HomeCtrl {
         // id is account id
         Account acct = accountRepository.findById(id);
 
-        Customer customer = acct.getOwner();
+        Customer customer = acct.getCustomer();
         customer.accounts.remove(acct);
 
         accountRepository.delete(acct);

@@ -35,15 +35,23 @@ public class Customer {
 //    @NotNull
 //    @Size(min=5, max=5)
 //    private String zipcode;
-//    @NotBlank
+    @NotNull
     private String username;
-    @NotBlank
+    @NotNull
     private String password;
-    @OneToMany(mappedBy="customer", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public Set<Account> accounts;
 
-    public Customer(String firstname, String lastname, String username, String password) {
+    public Customer(@NotNull @Size(min = 1, max = 35) String firstname, @NotNull @Size(min = 1, max = 35) String lastname, @NotNull String username, @NotNull String password, Set<Account> accounts) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.password = password;
+        this.accounts = accounts;
     }
+
+
 
     public Customer() {
 

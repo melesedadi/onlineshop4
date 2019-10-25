@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginService {
     @Autowired
-    private CustomerRepository customerRepository;
+    CustomerRepository customerRepository;
 
     public void registerUser(Customer customer)
     {
